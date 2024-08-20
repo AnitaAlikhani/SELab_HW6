@@ -9,27 +9,37 @@ public class Address {
     public TypeAddress Type;
     public varType varType;
 
+    private TypeAddressFormatter formatter;
+
     public Address(int num, varType varType, TypeAddress Type) {
         this.num = num;
         this.Type = Type;
         this.varType = varType;
+        setFormatter();
     }
 
     public Address(int num, varType varType) {
         this.num = num;
         this.Type = TypeAddress.Direct;
         this.varType = varType;
+        setFormatter();
+    }
+
+    private void setFormatter() {
+        switch (Type) {
+            case Direct:
+                this.formatter = new DirectAddressFormatter();
+                break;
+            case Indirect:
+                this.formatter = new IndirectAddressFormatter();
+                break;
+            case Imidiate:
+                this.formatter = new ImmediateAddressFormatter();
+                break;
+        }
     }
 
     public String toString() {
-        switch (Type) {
-            case Direct:
-                return num + "";
-            case Indirect:
-                return "@" + num;
-            case Imidiate:
-                return "#" + num;
-        }
-        return num + "";
+        return formatter.format(num);
     }
 }
