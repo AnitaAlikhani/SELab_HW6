@@ -9,7 +9,7 @@ public class UnidirectionalState implements RouteState {
 
     @Override
     public void makeUnidirectional(Graph graph) {
-
+        // this route is already unidirectional
     }
 
 }

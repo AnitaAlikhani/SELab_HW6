@@ -12,6 +12,8 @@ import lombok.Setter;
 public class Node implements Comparable<Node> {
     private final ArrayList<Edge> edges;
     @Setter
+    private String name;
+    @Setter
     private boolean visited;
     @Setter
     private int distance;

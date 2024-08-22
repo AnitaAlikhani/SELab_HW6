@@ -12,7 +12,7 @@ public class Edge {
     @Getter
     private final int weight;
 
-    private Edge(Node a, Node b, boolean directed, int weight) {
+    public Edge(Node a, Node b, boolean directed, int weight) {
         nodes = new Pair<>(a, b);
         this.directed = directed;
         this.weight = weight;

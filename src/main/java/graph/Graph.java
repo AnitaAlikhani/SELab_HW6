@@ -27,6 +27,14 @@ public class Graph {
             v.setVisited(false);
     }
 
+    public Node getNodeByName(String nodeName) {
+        for (Node n : graph) {
+            if (n.getName().equals(nodeName))
+                return n;
+        }
+        return null;
+    }
+
     public void bfs(Node s) {
         this.resetVisits();
 
@@ -41,7 +49,7 @@ public class Graph {
                 frontNode.setDistance(distance);
                 nodes.addAll(frontNode.getAvailableNeighbors()
                         .stream()
-                        .map(neighbor -> new Pair<Node, Integer>(neighbor, distance + 1))
+                        .map(neighbor -> new Pair<>(neighbor, distance + 1))
                         .collect(Collectors.toCollection(ArrayList::new)));
             }
         }
@@ -61,7 +69,7 @@ public class Graph {
                 frontNode.setDistance(distance);
                 nodes.addAll(frontNode.getAvailableWeightedNeighbors()
                         .stream()
-                        .map(neighbor -> new Pair<Integer, Node>(neighbor.getValue1() + distance,
+                        .map(neighbor -> new Pair<>(neighbor.getValue1() + distance,
                                 neighbor.getValue0()))
                         .collect(Collectors.toCollection(PriorityQueue::new)));
             }
