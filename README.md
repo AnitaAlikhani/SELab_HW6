@@ -332,8 +332,8 @@ public int getTemp() {
   ![getters and setters in Address java](https://github.com/user-attachments/assets/8a2c0225-3caa-4481-b039-9cb5f217d470)
 
   تغییر usage های این قسمت در کلاس های دیگر:
-![before refactor](https://github.com/user-attachments/assets/1f6551fe-45cb-4c9e-8554-01c2c8fa0236)
-![usages after refactor](https://github.com/user-attachments/assets/08cad23e-321d-4e69-b9e3-7d49d92e9877)
+  ![before refactor](https://github.com/user-attachments/assets/1f6551fe-45cb-4c9e-8554-01c2c8fa0236)
+  ![usages after refactor](https://github.com/user-attachments/assets/08cad23e-321d-4e69-b9e3-7d49d92e9877)
 
   
 
