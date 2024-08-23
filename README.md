@@ -109,7 +109,30 @@ public class CodeGenerationFacade {
 }
 ```
 - یک مورد [State/Strategy](https://refactoring.guru/replace-type-code-with-state-strategy) یا [استفاده از Polymorphism به جای شرط](https://refactoring.guru/replace-conditional-with-polymorphism) 
-- یک مورد [Separate Query From Modifier](https://refactoring.guru/separate-query-from-modifier)
+- یک مورد Separate Query From Modifier  
+بازآرایی "Separate Query from Modifier" به معنای جدا کردن وظایف یک متد است که همزمان داده‌ای را برمی‌گرداند (Query) و وضعیت را تغییر می‌دهد (Modifier)، به گونه‌ای که این دو وظیفه در متدهای جداگانه انجام شوند.
+در اینجا، متد `getTemp` در کلاس `Memory` که همزمان مقدار `lastTempIndex` را تغییر می‌داد و آن را برمی‌گرداند، بازآرایی شد. این متد به دو متد جداگانه تقسیم شد: یکی برای تغییر مقدار (`incrementTempIndex`) و دیگری برای برگرداندن مقدار (`getTempValue`).
+```
+public int getTemp() {
+    lastTempIndex += tempSize;
+    return lastTempIndex - tempSize;
+}
+```
+```
+public void incrementTempIndex() {
+    lastTempIndex += tempSize;
+}
+
+public int getTempValue() {
+    return lastTempIndex - tempSize;
+}
+
+public int getTemp() {
+    incrementTempIndex();
+    return getTempValue();
+}
+```
+
 - یک مورد [Self Encapsulated Field](https://refactoring.guru/self-encapsulate-field).
 - دو مورد مختلف غیر از بازآرایی‌های مطرح‌شده در موارد بالا.
     - در [اینجا](https://refactoring.guru/refactoring/techniques) می‌توانید لیستی از تمام بازآرایی‌های موجود را ببینید.
