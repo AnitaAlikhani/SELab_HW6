@@ -16,5 +16,4 @@ public class TrainStrategy implements TransportationStrategy {
         graph.bfs(from);
         return to.getDistance() * trainTimeUnit;
     }
-
 }

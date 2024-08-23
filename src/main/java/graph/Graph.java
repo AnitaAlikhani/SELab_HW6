@@ -20,6 +20,7 @@ public class Graph {
 
     public Graph(ArrayList<Node> graph) {
         this.graph = graph;
+        this.state = new BidirectionalState();  // default direction is 2 way, directed = false
     }
 
     public void resetVisits() {
@@ -76,4 +77,13 @@ public class Graph {
         }
     }
 
+    public void switchToUniDir() {
+        this.state = new UnidirectionalState();
+        this.state.makeUnidirectional(this);
+    }
+
+    public void switchToBiDir() {
+        this.state = new BidirectionalState();
+        this.state.makeBidirectional(this);
+    }
 }

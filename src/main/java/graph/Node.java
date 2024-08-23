@@ -11,22 +11,22 @@ import lombok.Setter;
 @Data
 public class Node implements Comparable<Node> {
     private final ArrayList<Edge> edges;
-    @Setter
-    private String name;
+    private final String name;
     @Setter
     private boolean visited;
     @Setter
     private int distance;
 
-    public Node() {
+    public Node(String name) {
         edges = new ArrayList<>();
+        this.name = name;
     }
 
     public ArrayList<Pair<Node, Integer>> getAvailableWeightedNeighbors() {
         return getEdges()
                 .stream()
                 .filter(edge -> !edge.isDirected() || edge.getNodes().getValue0() == this)
-                .map(edge -> new Pair<Node, Integer>(
+                .map(edge -> new Pair<>(
                         (edge.getNodes().getValue0().equals(this)) ? edge.getNodes().getValue1()
                                 : edge.getNodes().getValue0(),
                         edge.getWeight()))
@@ -37,7 +37,7 @@ public class Node implements Comparable<Node> {
     public ArrayList<Node> getAvailableNeighbors() {
         return getAvailableWeightedNeighbors()
                 .stream()
-                .map(pair -> pair.getValue0())
+                .map(Pair::getValue0)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 

@@ -10,5 +10,4 @@ public class TravelContext {
     public int calculateDistance(Node from, Node to) {
         return strategy.calculateDistance(from, to);
     }
-
 }

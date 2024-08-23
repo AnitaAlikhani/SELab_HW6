@@ -13,21 +13,14 @@ class TravelContextTest {
     @BeforeEach
     public void setup() {
         graph = new Graph(new ArrayList<>());
-        Node a = new Node();
-        a.setName("a");
-        Node b = new Node();
-        b.setName("b");
-        Node c = new Node();
-        c.setName("c");
+        Node a = new Node("a");
+        Node b = new Node("b");
+        Node c = new Node("c");
         graph.getGraph().add(a);
         graph.getGraph().add(b);
         graph.getGraph().add(c);
-        Edge e1 = new Edge(a, b, false, 0);
-        Edge e2 = new Edge(b , c, true, 0);
-        graph.getNodeByName("a").getEdges().add(e1);
-        graph.getNodeByName("b").getEdges().add(e1);
-        graph.getNodeByName("b").getEdges().add(e2);
-        graph.getNodeByName("c").getEdges().add(e2);
+        Edge.createEdge(a, b, false, 0);
+        Edge.createEdge(b , c, false, 0);  // bi-directional route
     }
 
     @Test
@@ -46,6 +39,26 @@ class TravelContextTest {
         int distance = context.calculateDistance(graph.getNodeByName("a"), graph.getNodeByName("c"));
 
         assertEquals(2, distance);
+    }
+
+    @Test
+    public void testMakeBidirectional() {
+        graph.switchToBiDir();
+        for (Node node : graph.getGraph()) {
+            for (Edge edge : node.getEdges()) {
+                assertFalse(edge.isDirected());  // all the edges must be undirected
+            }
+        }
+    }
+
+    @Test
+    public void testMakeUnidirectional() {
+        graph.switchToUniDir();
+        for (Node node : graph.getGraph()) {
+            for (Edge edge : node.getEdges()) {
+                assertTrue(edge.isDirected());  // all the edges must be directed
+            }
+        }
     }
 
 }

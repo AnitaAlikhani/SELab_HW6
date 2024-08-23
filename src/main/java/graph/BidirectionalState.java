@@ -1,21 +1,17 @@
 package graph;
 
 public class BidirectionalState implements RouteState {
-
     @Override
     public void makeBidirectional(Graph graph) {
-        for (Node node : graph.getGraph()) {
-            for (Edge edge : node.getEdges()) {
-                if (edge.isDirected()) {
-                    Edge.createEdge(edge.getNodes().getValue1(), edge.getNodes().getValue0(), false, edge.getWeight());
-                }
-            }
-        }
+        // this route is already bidirectional
     }
 
     @Override
     public void makeUnidirectional(Graph graph) {
-        graph.setState(new UnidirectionalState());
+        for (Node node : graph.getGraph()) {
+            for (Edge edge : node.getEdges()) {
+                edge.setDirected(true);  // change all the ways to uni-directional
+            }
+        }
     }
-
 }
