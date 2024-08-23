@@ -4,14 +4,15 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import MiniJava.errorHandler.ErrorHandler;
-import MiniJava.parser.ParserFacade;
+import MiniJava.parser.Parser;
+
 
 public class Main {
     public static void main(String[] args) {
-        ParserFacade parserFacade = new ParserFacade();
+        Parser parser = new Parser();
         try {
-            // Start parsing
-            parserFacade.parseInput(new Scanner(new File("src/main/resources/code")).useDelimiter("\\Z").next());
+            // start parsing
+            parser.startParse(new Scanner(new File("src/main/resources/code")));
         } catch (FileNotFoundException e) {
             ErrorHandler.printError(e.getMessage());
         }
