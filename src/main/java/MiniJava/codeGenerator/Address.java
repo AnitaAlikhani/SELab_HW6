@@ -5,25 +5,57 @@ package MiniJava.codeGenerator;
  */
 
 public class Address {
-    public int num;
-    public TypeAddress Type;
-    public varType varType;
-
+    private int num;
+    private TypeAddress Type;
+    private varType varType;
     private TypeAddressFormatter formatter;
 
     public Address(int num, varType varType, TypeAddress Type) {
-        this.num = num;
-        this.Type = Type;
-        this.varType = varType;
+        setNum(num);
+        setType(Type);
+        setVarType(varType);
         setFormatter();
     }
 
     public Address(int num, varType varType) {
-        this.num = num;
-        this.Type = TypeAddress.Direct;
-        this.varType = varType;
+        setNum(num);
+        setType(TypeAddress.Direct);
+        setVarType(varType);
         setFormatter();
     }
+
+    public int getNum() {
+        return num;
+    }
+
+    public TypeAddress getType() {
+        return Type;
+    }
+
+    public MiniJava.codeGenerator.varType getVarType() {
+        return varType;
+    }
+
+    public TypeAddressFormatter getFormatter() {
+        return formatter;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public void setType(TypeAddress type) {
+        Type = type;
+    }
+
+    public void setVarType(MiniJava.codeGenerator.varType varType) {
+        this.varType = varType;
+    }
+
+    public void setFormatter(TypeAddressFormatter formatter) {
+        this.formatter = formatter;
+    }
+
 
     private void setFormatter() {
         switch (Type) {

@@ -322,9 +322,36 @@ public int getTemp() {
 ```
 
 - یک مورد [Self Encapsulated Field](https://refactoring.guru/self-encapsulate-field).
+  برای اعمال این بازآرایی Address.java را انتخاب کردیم.
+  لازمه بازآرایی Self encapsulated field تبدیل فیلد های پابلیک به پرایوت و ایجاد getter و setter برای تمام فیلد های پرایوت است که به منظور امنیت بیشتر انجام می‌شود.
+  پس از این مراحل نیز باید usage های این کلاس را پیدا کرده و آن ها را اصلاح کنیم.
+  تغییر فیلد ها از public به private و تغییر constructor ها:
+  ![private fields and new constructors after refactoring Address java](https://github.com/user-attachments/assets/4df595b2-67d8-4d20-a9ca-f82a5e3c6fba)
+
+  ایجاد getter ها و setter ها:
+  ![getters and setters in Address java](https://github.com/user-attachments/assets/8a2c0225-3caa-4481-b039-9cb5f217d470)
+
+  تغییر usage های این قسمت در کلاس های دیگر:
+![before refactor](https://github.com/user-attachments/assets/1f6551fe-45cb-4c9e-8554-01c2c8fa0236)
+![usages after refactor](https://github.com/user-attachments/assets/08cad23e-321d-4e69-b9e3-7d49d92e9877)
+
+  
+
+
 - دو مورد مختلف غیر از بازآرایی‌های مطرح‌شده در موارد بالا.
     - در [اینجا](https://refactoring.guru/refactoring/techniques) می‌توانید لیستی از تمام بازآرایی‌های موجود را ببینید.
     - بازآرایی‌های خیلی ساده مانند تغییر نام متغیرها، تغییر نوع خصیصه‌های یک کلاس (برای مثال از private به final) یا پاک‌کردن کدهای کامنت‌شده، حساب نیست.
+    مورد بعدی بازآرایی Extract method است. برای این بازآرایی باید بخش‌های طولانی‌تر یا پیچیده‌تر کد را شناسایی کرده و آن‌ها را به متدهای مستقل‌تر و کوچکتر تبدیل کنیم.
+      برای این کار متود pintCodeBlock در کلاس Memory.java را انتخاب می‌کنیم، بازآرایی انجام شده باعث می‌شود کد تمیزتر شود و هر متد وظیفه خاصی داشته باشد، که به خوانایی و نگه‌داشت بهتر کمک می‌کند.
+      متود قبل از بازآرایی:
+      ![pint code block before refactor](https://github.com/user-attachments/assets/a61df6d4-fef1-4904-92c4-8f78553c1fab)
+
+
+      متود پس از بازآرایی:
+      
+![pint code block after refactor](https://github.com/user-attachments/assets/752b7826-d2e9-4f27-8389-9453f6e39ddc)
+
+
  - بعد از بازآرایی، پلاگین [formatter](https://code.revelc.net/formatter-maven-plugin/) را به فایل maven اضافه کنید.
 
 به ازای هر بازآرایی، یک commit کنید و نام آن بازآرایی را هم بیاورید.
