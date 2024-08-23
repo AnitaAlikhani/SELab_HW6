@@ -200,7 +200,87 @@ public class CodeGenerationFacade {
 
 }
 ```
-- یک مورد [State/Strategy](https://refactoring.guru/replace-type-code-with-state-strategy) یا [استفاده از Polymorphism به جای شرط](https://refactoring.guru/replace-conditional-with-polymorphism) 
+- یک مورد استفاده از Polymorphism به جای شرط  
+در این بازآرایی، به جای استفاده از شرط‌ها برای تعیین رفتار، از Polymorphism استفاده می‌شود تا هر رفتار در یک کلاس جداگانه پیاده‌سازی شود، که کد را تمیزتر و قابل توسعه‌تر می‌کند. این باعث می‌شود که افزودن رفتارهای جدید بدون تغییر در کد موجود ممکن باشد.
+ما متد `toString` در کلاس `Address` را که از یک شرط `switch` استفاده می‌کرد، با استفاده از Polymorphism بازنویسی کردیم. به این صورت که هر نوع آدرس (`TypeAddress`) در یک کلاس جداگانه فرمت خود را پیاده‌سازی می‌کند، که کد را ساده‌تر و قابل گسترش‌تر کرد.
+```
+package MiniJava.codeGenerator;
+
+public interface TypeAddressFormatter {
+    String format(int num);
+}
+```
+```
+package MiniJava.codeGenerator;
+
+public class DirectAddressFormatter implements TypeAddressFormatter {
+    @Override
+    public String format(int num) {
+        return String.valueOf(num);
+    }
+}
+
+package MiniJava.codeGenerator;
+
+public class IndirectAddressFormatter implements TypeAddressFormatter {
+    @Override
+    public String format(int num) {
+        return "@" + num;
+    }
+}
+
+package MiniJava.codeGenerator;
+
+public class ImmediateAddressFormatter implements TypeAddressFormatter {
+    @Override
+    public String format(int num) {
+        return "#" + num;
+    }
+}
+```
+```
+package MiniJava.codeGenerator;
+
+public class Address {
+    public int num;
+    public TypeAddress Type;
+    public varType varType;
+
+    private TypeAddressFormatter formatter;
+
+    public Address(int num, varType varType, TypeAddress Type) {
+        this.num = num;
+        this.Type = Type;
+        this.varType = varType;
+        setFormatter();
+    }
+
+    public Address(int num, varType varType) {
+        this.num = num;
+        this.Type = TypeAddress.Direct;
+        this.varType = varType;
+        setFormatter();
+    }
+
+    private void setFormatter() {
+        switch (Type) {
+            case Direct:
+                this.formatter = new DirectAddressFormatter();
+                break;
+            case Indirect:
+                this.formatter = new IndirectAddressFormatter();
+                break;
+            case Imidiate:
+                this.formatter = new ImmediateAddressFormatter();
+                break;
+        }
+    }
+
+    public String toString() {
+        return formatter.format(num);
+    }
+}
+```
 - یک مورد Separate Query From Modifier  
 بازآرایی "Separate Query from Modifier" به معنای جدا کردن وظایف یک متد است که همزمان داده‌ای را برمی‌گرداند (Query) و وضعیت را تغییر می‌دهد (Modifier)، به گونه‌ای که این دو وظیفه در متدهای جداگانه انجام شوند.
 در اینجا، متد `getTemp` در کلاس `Memory` که همزمان مقدار `lastTempIndex` را تغییر می‌داد و آن را برمی‌گرداند، بازآرایی شد. این متد به دو متد جداگانه تقسیم شد: یکی برای تغییر مقدار (`incrementTempIndex`) و دیگری برای برگرداندن مقدار (`getTempValue`).
