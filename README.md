@@ -58,9 +58,97 @@
 
 ### فاز دوم آزمایش
 در این فاز آزمایش قرار است هفت مورد بازآرایی بر روی بخش MiniJava این پروژه انجام دهید:
-- دو مورد اعمال الگوی [Facade](https://refactoring.guru/design-patterns/facade)
+- دو مورد اعمال الگوی Facade  
+الگوی Facade یک رابط ساده و یکپارچه برای دسترسی به یک زیرسیستم پیچیده ارائه می‌دهد و استفاده از آن را برای کاربران آسان‌تر می‌کند. این الگو با پنهان کردن جزئیات پیاده‌سازی و پیچیدگی‌های داخلی، تعاملات با کلاس‌های مختلف را ساده‌تر می‌کند.  
+در این بازآرایی، با استفاده از الگوی Facade دو کلاس جدید ایجاد کردیم که رابطی ساده و یکپارچه برای تعامل با زیرسیستم‌های پیچیده‌ی Parser و CodeGenerator فراهم می‌کنند.
+```
+package MiniJava.parser;
+
+import MiniJava.errorHandler.ErrorHandler;
+
+public class ParserFacade {
+    private Parser parser;
+    private ErrorHandler errorHandler;
+
+    public ParserFacade() {
+        this.errorHandler = new ErrorHandler();
+        ParseTable parseTable = new ParseTable();
+        this.parser = new Parser(parseTable, errorHandler);
+    }
+
+    public void parseInput(String input) {
+        parser.parse(input);
+    }
+
+    public void addParseRule(NonTerminal nonTerminal, Rule rule) {
+        parser.getParseTable().addRule(nonTerminal, rule);
+    }
+
+}
+```
+```
+package MiniJava.codeGenerator;
+
+import java.util.ArrayList;
+
+public class CodeGenerationFacade {
+    private CodeGenerator codeGenerator;
+
+    public CodeGenerationFacade() {
+        this.codeGenerator = new CodeGenerator();
+    }
+
+    public void addVariable(String name, varType type) {
+        Address address = new Address(codeGenerator.getMemory().getNextAddress(), type);
+        codeGenerator.getMemory().addVariable(name, address);
+    }
+
+    public void generateOperation(String operation, String sourceName, String destinationName) {
+        Address source = codeGenerator.getMemory().getAddress(sourceName);
+        Address destination = codeGenerator.getMemory().getAddress(destinationName);
+        if (source != null && destination != null) {
+            Operation op = new Operation(operation, source, destination);
+            codeGenerator.addOperation(op);
+        } else {
+            System.err.println("Invalid source or destination for operation.");
+        }
+    }
+
+    public ArrayList<Operation> getOperations() {
+        return codeGenerator.getOperations();
+    }
+
+    public void executeCode() {
+        codeGenerator.generateCode();
+    }
+
+}
+```
 - یک مورد [State/Strategy](https://refactoring.guru/replace-type-code-with-state-strategy) یا [استفاده از Polymorphism به جای شرط](https://refactoring.guru/replace-conditional-with-polymorphism) 
-- یک مورد [Separate Query From Modifier](https://refactoring.guru/separate-query-from-modifier)
+- یک مورد Separate Query From Modifier  
+بازآرایی "Separate Query from Modifier" به معنای جدا کردن وظایف یک متد است که همزمان داده‌ای را برمی‌گرداند (Query) و وضعیت را تغییر می‌دهد (Modifier)، به گونه‌ای که این دو وظیفه در متدهای جداگانه انجام شوند.
+در اینجا، متد `getTemp` در کلاس `Memory` که همزمان مقدار `lastTempIndex` را تغییر می‌داد و آن را برمی‌گرداند، بازآرایی شد. این متد به دو متد جداگانه تقسیم شد: یکی برای تغییر مقدار (`incrementTempIndex`) و دیگری برای برگرداندن مقدار (`getTempValue`).
+```
+public int getTemp() {
+    lastTempIndex += tempSize;
+    return lastTempIndex - tempSize;
+}
+```
+```
+public void incrementTempIndex() {
+    lastTempIndex += tempSize;
+}
+
+public int getTempValue() {
+    return lastTempIndex - tempSize;
+}
+
+public int getTemp() {
+    incrementTempIndex();
+    return getTempValue();
+}
+```
+
 - یک مورد [Self Encapsulated Field](https://refactoring.guru/self-encapsulate-field).
 - دو مورد مختلف غیر از بازآرایی‌های مطرح‌شده در موارد بالا.
     - در [اینجا](https://refactoring.guru/refactoring/techniques) می‌توانید لیستی از تمام بازآرایی‌های موجود را ببینید.
