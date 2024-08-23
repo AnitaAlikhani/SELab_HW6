@@ -61,11 +61,34 @@ public class Memory {
         return codeBlock.size();
     }
 
+
+//    pintCodeBlock before Extract Method refactor
+//    public void pintCodeBlock() {
+//        System.out.println("Code Block");
+//        for (int i = 0; i < codeBlock.size(); i++) {
+//            System.out.println(i + " : " + codeBlock.get(i).toString());
+//        }
+//    }
+
+
+//  pintCodeBlock after Extract Method refactor
     public void pintCodeBlock() {
+        printCodeBlockHeader();
+        printAllCodeBlocks();
+    }
+
+    private void printCodeBlockHeader() {
         System.out.println("Code Block");
+    }
+
+    private void printAllCodeBlocks() {
         for (int i = 0; i < codeBlock.size(); i++) {
-            System.out.println(i + " : " + codeBlock.get(i).toString());
+            printSingleCodeBlock(i);
         }
+    }
+
+    private void printSingleCodeBlock(int index) {
+        System.out.println(index + " : " + codeBlock.get(index).toString());
     }
 }
 
